@@ -1,0 +1,9 @@
+*.pyc
+.vscode
+data
+logs
+output
+slurm*
+copy_files.py
+release_record.md
+backup

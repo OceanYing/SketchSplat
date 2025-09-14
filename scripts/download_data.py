@@ -1,0 +1,37 @@
+import os
+import zipfile
+import gdown
+
+
+def download_and_unzip_google_drive_files(paths, download_to="./data"):
+    if not os.path.exists(download_to):
+        os.makedirs(download_to)
+
+    for path in paths:
+        # Convert Google Drive link to direct download link
+        file_id = path.split("/d/")[1].split("/")[0]
+        direct_link = f"https://drive.google.com/uc?id={file_id}"
+
+        print(f"Downloading from {direct_link}...")
+        output_path = os.path.join(download_to, f"{file_id}.zip")
+        gdown.download(direct_link, output_path, quiet=False)
+        print(f"Downloaded {output_path}")
+
+        # Unzip the downloaded file
+        with zipfile.ZipFile(output_path, "r") as zip_ref:
+            zip_ref.extractall(download_to)
+        os.remove(output_path)
+        print(f"Unzipped and deleted: {output_path}")
+
+    print(f"Finished extracting files to: {download_to}")
+
+
+# Google Drive file paths
+paths = [
+    "https://drive.google.com/file/d/13kWWNP-HIdVVwhntxx96s9Pzz3ZDyUbd/view?usp=sharing",   # ABC-NEF_Edge (with)
+    "https://drive.google.com/file/d/15n66U4gMoceeNKh0dIS-WwYhBVTmruJu/view?usp=sharing",   # Replica_Edge
+    "https://drive.google.com/file/d/19wNd1DDpFPL-njYWyE4xnwxkP398ofax/view?usp=sharing",   # DTU_Edge
+]
+
+download_to = "./data"
+download_and_unzip_google_drive_files(paths, download_to)
