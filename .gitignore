@@ -1,6 +1,6 @@
 *.pyc
 .vscode
-data
+# data
 logs
 output
 slurm*
